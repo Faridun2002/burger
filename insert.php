@@ -15,9 +15,9 @@ try {
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $login = $_POST['login'];
-        $pass = $_POST['password'];
+        $pass = $_POST['password']."hello";
     
-        $sql = "INSERT INTO user (fName, lName, login, password) VALUES (:firstname, :lastname, :login, :password)";
+        $sql = "INSERT INTO user (fName, lName, login, password, status) VALUES (:firstname, :lastname, :login, :password, '1')";
     
         // Подготовка и выполнение запроса
         $stmt = $conn->prepare($sql);

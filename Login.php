@@ -1,3 +1,12 @@
+<?php
+session_start();
+$err="";
+if (isset($_SESSION["error"])) {
+    $err = $_SESSION["error"];
+    session_destroy();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -28,22 +37,21 @@
                 <div class="login100-pic js-tilt" data-tilt="">
                     <img src="./img/932980823-monblan-burger-600x600.jpg" alt="IMG">
                 </div>
-                <form class="login100-form validate-form" asp-controller="Authorization" asp-action="Login" method="post">
-                    <div class="validation text-danger" asp-validation-summary="ModelOnly"></div>
+                <form class="login100-form validate-form" action="auth.php" method="post">
                     <span class="login100-form-title" style="font-size: 24px; font-weight: bold;">
                         Логин участника
                     </span>
+                    <center><span><? echo $err ?></span></center><br>
 
-                    <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                        <input class="input100" type="text" name="Login" placeholder="Почта">
-                        <span class="text-danger" asp-validation-for="Login"></span>
+                    <div class="wrap-input100 validate-input" data-validate="">
+                        <input class="input100" type="text" name="login" placeholder="Логин">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
                         </span>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <input class="input100" type="password" name="Password" placeholder="Пароль">
+                        <input class="input100" type="password" name="password" placeholder="Пароль">
                         <span class="text-danger" asp-validation-for="Password"></span>
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
