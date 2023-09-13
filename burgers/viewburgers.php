@@ -161,7 +161,7 @@
                                     <th scope='col'>".$row['price']."</th>
                                     <th scope='col'>".$row['status']."</th>
                                     <th scope='col'><a href='updateburgers.php?id=".$row['id']."' class='btn btn-primary'>Edit</a></th>
-                                    <th scope='col'><a href='../query.php?id=".$row['id']."' class='btn btn-primary'>Delete</a></th>
+                                    <th scope='col'><a href='deleteburgers.php?id=".$row['id']."' class='btn btn-primary'>Delete</a></th>
                                     </tr>";
                                 }
                             ?>
