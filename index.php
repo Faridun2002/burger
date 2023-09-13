@@ -50,7 +50,7 @@
     </div>
     <!-- slider_area_end -->
 
-    <div class="best_burgers_area">
+    <!-- <div class="best_burgers_area">
         <div class="container">
             <center>
                 <h2>Запись пользователей</h2>
@@ -74,7 +74,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
     <div class="best_burgers_area">
         <div class="container">
             <div class="row">

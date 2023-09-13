@@ -1,3 +1,15 @@
+<?
+// session_start();
+
+// if(!isset($_SESSION['login'])){
+//     $_SESSION["error"]="Сначало вы должны ввести логин и пароль!";
+//     header("Location: login.php");
+//     exit;
+// }
+
+// session_destroy();
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -9,8 +21,7 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <!-- Custom Stylesheet -->
-    <link href="css/styles.css" rel="stylesheet">
-
+    <link href="../css/styles.css" rel="stylesheet">
 </head>
 
 <body>
@@ -23,14 +34,10 @@
     </div>
     <div id="main-wrapper">
 
-        <div class="nav-header">
-            <div class="brand-logo">
-                <a href="index.html">
-                    <!-- <b class="logo-abbr"><img src="images/logo.png" alt=""> </b> -->
-                    <!-- <span class="logo-compact"><img src="" alt=""></span> -->
-                    <span class="brand-title">
-                        <img src="./img/logo.png" alt="">
-                    </span>
+        <div class="nav-header" style="background-color: #F0542C;">
+            <div class="">
+                <a href="admin.php">
+                    <center><img src="../img/logo.png" style="background-size: cover;"></center>
                 </a>
             </div>
         </div>
@@ -59,7 +66,7 @@
                         <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                                 <span class="activity active"></span>
-                                <img src="./img/11.png" height="40" width="40" alt="">
+                                <img src="../img/11.png" height="40" width="40" alt="">
                             </div>
                         </li>
                     </ul>
@@ -73,9 +80,10 @@
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Бургеры</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="./email-inbox.html">Добавить</a></li>
-                        <li><a href="./email-read.html">Обновить</a></li>
-                        <li><a href="./email-compose.html">Удалить</a></li>
+                        <li><a href="./burgers/viewburgers.php">Список бургеров</a></li>
+                        <li><a href="./burgers/addburgers.php">Добавить</a></li>
+                        <li><a href="./burgers/updateburgers.php">Обновить</a></li>
+                        <li><a href="./burgers/deleteburgers.php">Удалить</a></li>
                     </ul>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="true">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Категории</span>
@@ -116,16 +124,58 @@
         </div>
         <div class="content-body">
             <div class="container-fluid">
-                <?php //include_once("./category/category.php") 
-                ?>
+                <div class="container">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                include_once "../conn.php";
+                                // Пример SELECT-запроса
+                                $query = "SELECT * FROM `burgers`";
+                
+                                // Подготовка запроса
+                                $stmt = $conn->prepare($query);
+                
+                                // Выполнение запроса
+                                $stmt->execute();
+                
+                                // Получение результатов запроса
+                                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                                // Вывод результатов или их обработка
+                                foreach ($results as $row) {
+                                    echo    "<tr>
+                                    <th scope='col'>".$row['id']."</th>
+                                    <th scope='col'>".$row['name']."</th>
+                                    <th scope='col'>".$row['description']."</th>
+                                    <th scope='col'>".$row['price']."</th>
+                                    <th scope='col'>".$row['status']."</th>
+                                    <th scope='col'><a href='updateburgers.php?id=".$row['id']."' class='btn btn-primary'>Edit</a></th>
+                                    <th scope='col'><a href='../query.php?id=".$row['id']."' class='btn btn-primary'>Delete</a></th>
+                                    </tr>";
+                                }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-    <script src="./js/common.min.js"></script>
-    <script src="./js/custom.min.js"></script>
-    <script src="./js/settings.js"></script>
-    <script src="./js/gleek.js"></script>
-    <script src="./js/styleSwitcher.js"></script>
+    <script src="../js/common.min.js"></script>
+    <script src="../js/custom.min.js"></script>
+    <script src="../js/settings.js"></script>
+    <script src="../js/gleek.js"></script>
+    <script src="../js/styleSwitcher.js"></script>
 
 </body>
 

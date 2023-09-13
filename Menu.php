@@ -2,11 +2,11 @@
 <html class="no-js" lang="zxx">
 
 <?php
-    include_once "head.php";
+include_once "head.php";
 ?>
 
 <body>
-   <?php include_once "header.php" ?>
+    <?php include_once "header.php" ?>
     <!-- header-end -->
 
     <!-- bradcam_area_start -->
@@ -27,129 +27,36 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-6 col-md-6 col-lg-6">
-                    <div class="single_delicious d-flex align-items-center">
-                        <div class="thumb">
-                            <img src="img/burger/1.png" alt="">
-                        </div>
-                        <div class="info">
-                            <h3>Beefy Burgers</h3>
-                            <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
-                            <span>$5</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6">
-                    <div class="single_delicious d-flex align-items-center">
-                        <div class="thumb">
-                            <img src="img/burger/2.png" alt="">
-                        </div>
-                        <div class="info">
-                            <h3>Burger Boys</h3>
-                            <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
-                            <span>$5</span>
-                        </div>
-                    </div>
+                <?php
+                include_once "conn.php";
+                // Пример SELECT-запроса
+                $query = "SELECT * FROM `burgers` where status = '1'";
 
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_delicious d-flex align-items-center">
-                        <div class="thumb">
-                            <img src="img/burger/3.png" alt="">
-                        </div>
-                        <div class="info">
-                            <h3>Burger Bizz</h3>
-                            <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
-                            <span>$5</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-md-6 col-lg-6">
-                    <div class="single_delicious d-flex align-items-center">
-                        <div class="thumb">
-                            <img src="img/burger/4.png" alt="">
-                        </div>
-                        <div class="info">
-                            <h3>Crackles Burger</h3>
-                            <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
-                            <span>$5</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_delicious d-flex align-items-center">
-                        <div class="thumb">
-                            <img src="img/burger/5.png" alt="">
-                        </div>
-                        <div class="info">
-                            <h3>Bull Burgers</h3>
-                            <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
-                            <span>$5</span>
-                        </div>
-                    </div>
+                // Подготовка запроса
+                $stmt = $conn->prepare($query);
 
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_delicious d-flex align-items-center">
-                        <div class="thumb">
-                            <img src="img/burger/6.png" alt="">
-                        </div>
-                        <div class="info">
-                            <h3>Rocket Burgers</h3>
-                            <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
-                            <span>$5</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_delicious d-flex align-items-center">
-                        <div class="thumb">
-                            <img src="img/burger/7.png" alt="">
-                        </div>
-                        <div class="info">
-                            <h3>Smokin Burger</h3>
-                            <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
-                            <span>$5</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_delicious d-flex align-items-center">
-                        <div class="thumb">
-                            <img src="img/burger/8.png" alt="">
-                        </div>
-                        <div class="info">
-                            <h3>Delish Burger</h3>
-                            <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
-                            <span>$5</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-md-6 col-lg-6">
-                    <div class="single_delicious d-flex align-items-center">
-                        <div class="thumb">
-                            <img src="img/burger/4.png" alt="">
-                        </div>
-                        <div class="info">
-                            <h3>Crackles Burger</h3>
-                            <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
-                            <span>$5</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_delicious d-flex align-items-center">
-                        <div class="thumb">
-                            <img src="img/burger/5.png" alt="">
-                        </div>
-                        <div class="info">
-                            <h3>Bull Burgers</h3>
-                            <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
-                            <span>$5</span>
-                        </div>
-                    </div>
+                // Выполнение запроса
+                $stmt->execute();
 
-                </div>
+                // Получение результатов запроса
+                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                // Вывод результатов или их обработка
+                foreach ($results as $row) {
+                    echo    "<div class='col-xl-6 col-md-6 col-lg-6'>
+                                <div class='single_delicious d-flex align-items-center'>
+                                    <div class='thumb'>
+                                        <img src='uploads/" . $row['image_url'] . "' alt=''>
+                                    </div>
+                                    <div class='info'>
+                                        <h3>" . $row['name'] . "</h3>
+                                        <p>" . $row['description'] . "</p>
+                                        <span>$" . $row['price'] . "</span>
+                                    </div>
+                                </div>
+                            </div>";
+                }
+                ?>
             </div>
         </div>
     </div>
@@ -157,35 +64,35 @@
 
     <!-- features_room_startt -->
     <div class="Burger_President_area">
-            <div class="Burger_President_here">
-                <div class="single_Burger_President">
-                    <div class="room_thumb">
-                        <img src="img/burgers/1.png" alt="">
-                        <div class="room_heading d-flex justify-content-between align-items-center">
-                            <div class="room_heading_inner">
-                                <span>$20</span>
-                                <h3>The Burger President</h3>
-                                <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
-                                <a href="#" class="boxed-btn3">Заказать сейчас</a>
-                            </div>
-                            
+        <div class="Burger_President_here">
+            <div class="single_Burger_President">
+                <div class="room_thumb">
+                    <img src="img/burgers/1.png" alt="">
+                    <div class="room_heading d-flex justify-content-between align-items-center">
+                        <div class="room_heading_inner">
+                            <span>$20</span>
+                            <h3>The Burger President</h3>
+                            <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
+                            <a href="#" class="boxed-btn3">Заказать сейчас</a>
                         </div>
+
                     </div>
                 </div>
-                <div class="single_Burger_President">
-                    <div class="room_thumb">
-                        <img src="img/burgers/2.png" alt="">
-                        <div class="room_heading d-flex justify-content-between align-items-center">
-                            <div class="room_heading_inner">
-                                <span>$20</span>
-                                <h3>The Burger President</h3>
-                                <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
-                                <a href="#" class="boxed-btn3">Заказать сейчас</a>
-                            </div>
+            </div>
+            <div class="single_Burger_President">
+                <div class="room_thumb">
+                    <img src="img/burgers/2.png" alt="">
+                    <div class="room_heading d-flex justify-content-between align-items-center">
+                        <div class="room_heading_inner">
+                            <span>$20</span>
+                            <h3>The Burger President</h3>
+                            <p>Отличный способ сделать ваш бизнес заслуживающим доверия и актуальным.</p>
+                            <a href="#" class="boxed-btn3">Заказать сейчас</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
     <!-- features_room_end -->
 
@@ -282,55 +189,55 @@
                 </div>
             </div>
         </div>
-</div>
-<!-- testimonial_area_ned  -->
+    </div>
+    <!-- testimonial_area_ned  -->
 
     <!-- instragram_area_start -->
     <div class="instragram_area">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6">
-                <div class="single_instagram">
-                    <img src="img/instragram/1.png" alt="">
-                    <div class="ovrelay">
-                        <a href="#">
-                            <i class="fa fa-instagram"></i>
-                        </a>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="single_instagram">
+                        <img src="img/instragram/1.png" alt="">
+                        <div class="ovrelay">
+                            <a href="#">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="single_instagram">
-                    <img src="img/instragram/2.png" alt="">
-                    <div class="ovrelay">
-                        <a href="#">
-                            <i class="fa fa-instagram"></i>
-                        </a>
+                <div class="col-lg-3 col-md-6">
+                    <div class="single_instagram">
+                        <img src="img/instragram/2.png" alt="">
+                        <div class="ovrelay">
+                            <a href="#">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="single_instagram">
-                    <img src="img/instragram/3.png" alt="">
-                    <div class="ovrelay">
-                        <a href="#">
-                            <i class="fa fa-instagram"></i>
-                        </a>
+                <div class="col-lg-3 col-md-6">
+                    <div class="single_instagram">
+                        <img src="img/instragram/3.png" alt="">
+                        <div class="ovrelay">
+                            <a href="#">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="single_instagram">
-                    <img src="img/instragram/4.png" alt="">
-                    <div class="ovrelay">
-                        <a href="#">
-                            <i class="fa fa-instagram"></i>
-                        </a>
+                <div class="col-lg-3 col-md-6">
+                    <div class="single_instagram">
+                        <img src="img/instragram/4.png" alt="">
+                        <div class="ovrelay">
+                            <a href="#">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <!-- instragram_area_end -->
 

@@ -28,7 +28,7 @@
                 <div class="login100-pic js-tilt" data-tilt="">
                     <img src="./img/932980823-monblan-burger-600x600.jpg" alt="IMG">
                 </div>
-                <form class="login100-form validate-form" method="POST" action="insert.php">
+                <form class="login100-form validate-form" method="POST" action="query.php">
                     <input type="hidden" name="act" value="adduser">
                     <div class="validation text-danger" asp-validation-summary="ModelOnly"></div>
                     <span class="login100-form-title" style="font-size: 24px; font-weight: bold;">
