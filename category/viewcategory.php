@@ -91,6 +91,8 @@
                     <ul aria-expanded="false">
                         <li><a href="./category/category.php">Список категорий</a></li>
                         <li><a href="./category/addcategory.php">Добавить</a></li>
+                        <li><a href="./email-read.html">Обновить</a></li>
+                        <li><a href="./email-compose.html">Удалить</a></li>
                     </ul>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Листы</span>
@@ -123,22 +125,45 @@
         <div class="content-body">
             <div class="container-fluid">
                 <div class="container">
-                    <form action="../query.php" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="act" value="addcategory">
-                        <div class="form-group">
-                            <label for="">Введите название</label>
-                            <input type="text" class="form-control" name="name" placeholder="Введите название" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Введите описание</label>
-                            <input type="check" class="form-control" name="status" placeholder="Введите статус" required>
-                        </div>
-                        <input type="submit" value="Submit" name="submit"  class="btn btn-primary">
-                    </form>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Update</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                include_once "../conn.php";
+                                // Пример SELECT-запроса
+                                $query = "SELECT * FROM `category`";
+                
+                                // Подготовка запроса
+                                $stmt = $conn->prepare($query);
+                
+                                // Выполнение запроса
+                                $stmt->execute();
+                
+                                // Получение результатов запроса
+                                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                                // Вывод результатов или их обработка
+                                foreach ($results as $row) {
+                                    echo    "<tr>
+                                    <th scope='col'>".$row['id']."</th>
+                                    <th scope='col'>".$row['name']."</th>
+                                    <th scope='col'>".$row['status']."</th>
+                                    <th scope='col'><a href='updatecategory.php?id=".$row['id']."' class='btn btn-primary'>Edit</a></th>
+                                    <th scope='col'><a href='deletecategory.php?id=".$row['id']."' class='btn btn-primary'>Delete</a></th>
+                                    </tr>";
+                                }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
-                <?php
-                // echo "<center><h1>Добро пожаловать " . $_SESSION["lname"] .  "</h1></center>";
-                ?>
             </div>
         </div>
     </div>

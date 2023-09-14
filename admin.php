@@ -81,7 +81,7 @@ session_destroy();
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="./burgers/viewburgers.php">Список бургеров</a></li>
-                        <li><a href="./burgers/addburgers.php">Добавить</a></li>
+                        <li><a href="./addburgers.php">Добавить</a></li>
                         <li><a href="./burgers/updateburgers.php">Обновить</a></li>
                         <li><a href="./burgers/deleteburgers.php">Удалить</a></li>
                     </ul>

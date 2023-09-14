@@ -11,21 +11,8 @@ try {
     $act = $_POST['act'];
 
     if ($act == "adduser") {
-        //Получение данных из формы
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['lastname'];
-        $login = $_POST['login'];
-        $pass = $_POST['password'] . "hello";
 
-        $sql = "INSERT INTO user (fName, lName, login, password, status) VALUES (:firstname, :lastname, :login, :password, '1')";
-
-        // Подготовка и выполнение запроса
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':firstname', $firstname);
-        $stmt->bindParam(':lastname', $lastname);
-        $stmt->bindParam(':login', $login);
-        $stmt->bindParam(':password', md5($pass));
-        $stmt->execute();
+        
     } else if ($act == "addburger") {
         //Получение данных из формы
         $name = $_POST['name'];
