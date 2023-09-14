@@ -137,6 +137,7 @@
                         </thead>
                         <tbody>
                             <?php
+                            try{
                                 include_once "../conn.php";
                                 // Пример SELECT-запроса
                                 $query = "SELECT * FROM `category`";
@@ -149,8 +150,8 @@
                 
                                 // Получение результатов запроса
                                 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                
-                                // Вывод результатов или их обработка
+                                if($result !== null){
+                                 // Вывод результатов или их обработка
                                 foreach ($results as $row) {
                                     echo    "<tr>
                                     <th scope='col'>".$row['id']."</th>
@@ -160,6 +161,17 @@
                                     <th scope='col'><a href='deletecategory.php?id=".$row['id']."' class='btn btn-primary'>Delete</a></th>
                                     </tr>";
                                 }
+                            }
+                            else{
+                                throw new Exception;
+                            }
+                        }
+                        catch(Exception $ex){
+                           echo $ex -> getMessage();
+                        }
+                        finally{
+                            
+                        }
                             ?>
                         </tbody>
                     </table>

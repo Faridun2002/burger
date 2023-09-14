@@ -89,7 +89,7 @@ session_destroy();
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Категории</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="./category/category.php">Список категорий</a></li>
+                        <li><a href="./category/viewcategory.php">Список категорий</a></li>
                         <li><a href="./category/addcategory.php">Добавить</a></li>
                         <li><a href="./email-read.html">Обновить</a></li>
                         <li><a href="./email-compose.html">Удалить</a></li>
