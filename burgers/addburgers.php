@@ -8,20 +8,6 @@
 // }
 
 // session_destroy();
-
-include_once "../conn.php";
-$id = $_GET['id'];
-// Пример SELECT-запроса
-$query = "SELECT * FROM `burgers` where id = '".$id."'";
-
-// Подготовка запроса
-$stmt = $conn->prepare($query);
-
-// Выполнение запроса
-$stmt->execute();
-
-// Получение результатов запроса
-$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -140,27 +126,22 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="container-fluid">
                 <div class="container">
                     <form action="../query.php" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="act" value="updateburger">
-                        <input type="hidden" name="id"  value="<? echo $results[0]['id'] ?>">
+                        <input type="hidden" name="act" value="addburger">
                         <div class="form-group">
                             <label for="">Введите название</label>
-                            <input type="text" class="form-control" name="name" placeholder="Введите название"  value="<? echo $results[0]['name'] ?>" required>
+                            <input type="text" class="form-control" name="name" placeholder="Введите название" required>
                         </div>
                         <div class="form-group">
                             <label for="">Введите описание</label>
-                            <input type="text" class="form-control" name="description" placeholder="Введите описание"  value="<? echo $results[0]['description'] ?>" required>
+                            <input type="text" class="form-control" name="description" placeholder="Введите описание" required>
                         </div>
                         <div class="form-group">
                             <label for="">Введите цену</label>
-                            <input type="number" class="form-control" name="price" placeholder="1.0"  value="<? echo $results[0]['price'] ?>" required>
+                            <input type="number" class="form-control" name="price" placeholder="1.0" required>
                         </div>
                         <div class="form-group">
                             <label for="">Выберите файл для загрузки:</label>
-                            <input type="file" class="btn" value="Выбрать" name="fileToUpload" id="fileToUpload">
-                        </div>
-                        <div class="form-group">
-                            <label for="">Введите статус</label>
-                            <input type="text" class="form-control" name="status" placeholder="Введите статус"  value="<? echo $results[0]['status'] ?>" required>
+                            <input type="file" class="btn" value="Выбрать" name="fileToUpload" id="fileToUpload" required>
                         </div>
                         <input type="submit" value="Submit" name="submit"  class="btn btn-primary">
                     </form>

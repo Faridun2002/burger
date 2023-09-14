@@ -8,20 +8,6 @@
 // }
 
 // session_destroy();
-
-include_once "../conn.php";
-$id = $_GET['id'];
-// Пример SELECT-запроса
-$query = "SELECT * FROM `burgers` where id = '".$id."'";
-
-// Подготовка запроса
-$stmt = $conn->prepare($query);
-
-// Выполнение запроса
-$stmt->execute();
-
-// Получение результатов запроса
-$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -139,35 +125,49 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="content-body">
             <div class="container-fluid">
                 <div class="container">
-                    <form action="../query.php" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="act" value="updateburger">
-                        <input type="hidden" name="id"  value="<? echo $results[0]['id'] ?>">
-                        <div class="form-group">
-                            <label for="">Введите название</label>
-                            <input type="text" class="form-control" name="name" placeholder="Введите название"  value="<? echo $results[0]['name'] ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Введите описание</label>
-                            <input type="text" class="form-control" name="description" placeholder="Введите описание"  value="<? echo $results[0]['description'] ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Введите цену</label>
-                            <input type="number" class="form-control" name="price" placeholder="1.0"  value="<? echo $results[0]['price'] ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Выберите файл для загрузки:</label>
-                            <input type="file" class="btn" value="Выбрать" name="fileToUpload" id="fileToUpload">
-                        </div>
-                        <div class="form-group">
-                            <label for="">Введите статус</label>
-                            <input type="text" class="form-control" name="status" placeholder="Введите статус"  value="<? echo $results[0]['status'] ?>" required>
-                        </div>
-                        <input type="submit" value="Submit" name="submit"  class="btn btn-primary">
-                    </form>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                include_once "../conn.php";
+                                // Пример SELECT-запроса
+                                $query = "SELECT * FROM `burgers`";
+                
+                                // Подготовка запроса
+                                $stmt = $conn->prepare($query);
+                
+                                // Выполнение запроса
+                                $stmt->execute();
+                
+                                // Получение результатов запроса
+                                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                                // Вывод результатов или их обработка
+                                foreach ($results as $row) {
+                                    echo    "<tr>
+                                    <th scope='col'>".$row['id']."</th>
+                                    <th scope='col'>".$row['name']."</th>
+                                    <th scope='col'>".$row['description']."</th>
+                                    <th scope='col'>".$row['price']."</th>
+                                    <th scope='col'>".$row['status']."</th>
+                                    <th scope='col'><a href='updateburgers.php?id=".$row['id']."' class='btn btn-primary'>Edit</a></th>
+                                    <th scope='col'><a href='deleteburgers.php?id=".$row['id']."' class='btn btn-primary'>Delete</a></th>
+                                    </tr>";
+                                }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
-                <?php
-                // echo "<center><h1>Добро пожаловать " . $_SESSION["lname"] .  "</h1></center>";
-                ?>
             </div>
         </div>
     </div>
