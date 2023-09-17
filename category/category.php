@@ -9,7 +9,8 @@
                     <th width="20%">Status</th>
                 </tr>
                 <?php
-                include_once('../conn.php');
+                include_once "../conn.php";
+                $conn = getconn();
                 $sql = "SELECT * FROM category where status=1";
                 $result = $conn->query($sql);
                 while ($row = $result->fetch()) {

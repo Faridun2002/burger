@@ -1,13 +1,9 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "burger";
 
 try {
-    $conn = new PDO("mysql:host=$servername;port=3306;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    include_once "../conn.php";
 
+    $conn = getconn();
     //Получение данных из формы
     $id = $_GET['id'];
 

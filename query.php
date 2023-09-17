@@ -1,18 +1,27 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "burger";
 
 try {
-    $conn = new PDO("mysql:host=$servername;port=3306;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    include_once "../conn.php";
+    $conn = getconn();
 
     $act = $_POST['act'];
 
     if ($act == "adduser") {
+        //Получение данных из формы
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
+        $login = $_POST['login'];
+        $pass = $_POST['password'] . "hello";
 
-        
+        $sql = "INSERT INTO user (fName, lName, login, password, status) VALUES (:firstname, :lastname, :login, :password, '1')";
+
+        // Подготовка и выполнение запроса
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':firstname', $firstname);
+        $stmt->bindParam(':lastname', $lastname);
+        $stmt->bindParam(':login', $login);
+        $stmt->bindParam(':password', md5($pass));
+        $stmt->execute();
     } else if ($act == "addburger") {
         //Получение данных из формы
         $name = $_POST['name'];
@@ -154,13 +163,38 @@ try {
         $sql = "delete from burgers where id = '" . $id . "';";
         // Подготовка и выполнение запроса
         $stmt = $conn->prepare($sql);
-        
-        $stmt->execute();
-    }
 
+        $stmt->execute();
+    } else if ($act == "updatecategory") {
+        //Получение данных из формы
+        $id = $_POST['id'];
+        $name = $_POST['name'];
+        $status = $_POST['status'];
+        $sql = "update burgers set name=:name, status=:status where id = '" . $id . "';";
+
+        // Подготовка и выполнение запроса
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':status', $status);
+
+        $stmt->execute();
+    } else if ($act == "addcategory") {
+        //Получение данных из формы
+        $name = $_POST['name'];
+        $sql = "INSERT INTO category (name, status) VALUES (:name,  '1')";
+
+        // Подготовка и выполнение запроса
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':name', $name);
+        $stmt->execute();
+    } else {
+        throw new ErrorException("Ошибка неизвестный action!!!");
+        return;
+    }
     echo "Данные успешно отправлено!!!.";
 } catch (PDOException $e) {
-    echo "Ошибка: " . $e->getMessage();
+    echo $e->getMessage();
 }
 
 $conn = null;

@@ -139,12 +139,11 @@
                             <?php
                             try{
                                 include_once "../conn.php";
-                                // Пример SELECT-запроса
+                                $conn = getconn();
                                 $query = "SELECT * FROM `category`";
-                
+                                
                                 // Подготовка запроса
                                 $stmt = $conn->prepare($query);
-                
                                 // Выполнение запроса
                                 $stmt->execute();
                 
@@ -163,7 +162,7 @@
                                 }
                             }
                             else{
-                                throw new Exception;
+                                throw new Exception("Данные отсутствуют!");
                             }
                         }
                         catch(Exception $ex){

@@ -10,9 +10,10 @@
 // session_destroy();
 
 include_once "../conn.php";
+$conn = getconn();
 $id = $_GET['id'];
 // Пример SELECT-запроса
-$query = "SELECT * FROM `category` where id = '".$id."'";
+$query = "SELECT * FROM `category` where id = '" . $id . "'";
 
 // Подготовка запроса
 $stmt = $conn->prepare($query);
@@ -141,16 +142,16 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="container">
                     <form action="../query.php" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="act" value="updatecategory">
-                        <input type="hidden" name="id"  value="<? echo $results[0]['id'] ?>">
+                        <input type="hidden" name="id" value="<? echo $results[0]['id'] ?>">
                         <div class="form-group">
                             <label for="">Введите название</label>
-                            <input type="text" class="form-control" name="name" placeholder="Введите название"  value="<? echo $results[0]['name'] ?>" required>
+                            <input type="text" class="form-control" name="name" placeholder="Введите название" value="<? echo $results[0]['name'] ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="">Введите статус</label>
-                            <input type="text" class="form-control" name="status" placeholder="Введите статус"  value="<? echo $results[0]['status'] ?>" required>
+                            <input type="text" class="form-control" name="status" placeholder="Введите статус" value="<? echo $results[0]['status'] ?>" required>
                         </div>
-                        <input type="submit" value="Submit" name="submit"  class="btn btn-primary">
+                        <input type="submit" value="Submit" name="submit" class="btn btn-primary">
                     </form>
                 </div>
                 <?php

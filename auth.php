@@ -1,17 +1,13 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "burger";
 
 try {
-    $conn = new PDO("mysql:host=$servername;port=3306;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    include_once "conn.php";
+    $conn = getconn();
 
     session_start();
 
-    if(isset($_POST['login'])) $login = $_POST['login'];
-    if(isset($_POST['password'])) $pass = $_POST['password'] . "hello";
+    if (isset($_POST['login'])) $login = $_POST['login'];
+    if (isset($_POST['password'])) $pass = $_POST['password'] . "hello";
 
     // Пример SELECT-запроса
     $query = "SELECT * FROM `user` where login = :login and status = '1'";
@@ -37,7 +33,7 @@ try {
             exit;
         }
     }
-    $_SESSION["error"]="Логин или пароль введён неверно!";
+    $_SESSION["error"] = "Логин или пароль введён неверно!";
     header("Location: login.php");
     exit;
 } catch (PDOException $e) {

@@ -140,7 +140,8 @@
                         <tbody>
                             <?php
                                 include_once "../conn.php";
-                                // Пример SELECT-запроса
+
+                                $conn = getconn();
                                 $query = "SELECT * FROM `burgers`";
                 
                                 // Подготовка запроса
