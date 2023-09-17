@@ -76,15 +76,9 @@
         <div class="nk-sidebar">
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
-                    <a class="has-arrow" href="#" aria-expanded="false">
+                    <a class="has-arrow" href="viewburgers.php" aria-expanded="false">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Бургеры</span>
                     </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./burgers/viewburgers.php">Список бургеров</a></li>
-                        <li><a href="./burgers/addburgers.php">Добавить</a></li>
-                        <li><a href="./burgers/updateburgers.php">Обновить</a></li>
-                        <li><a href="./burgers/deleteburgers.php">Удалить</a></li>
-                    </ul>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="true">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Категории</span>
                     </a>

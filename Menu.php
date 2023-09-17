@@ -28,7 +28,7 @@ include_once "head.php";
             </div>
             <div class="row">
                 <?php
-                include_once "../conn.php";
+                include_once "conn.php";
                 $conn = getconn();
                 
                 $query = "SELECT * FROM `burgers` where status = '1'";

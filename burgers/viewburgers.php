@@ -8,6 +8,17 @@
 // }
 
 // session_destroy();
+
+include_once "../log.php";
+// Пример использования
+logger("Начало процесса 1");
+// Выполнение процесса 1
+logger("Завершение процесса 1");
+
+logger("Начало процесса 2");
+// Выполнение процесса 2
+logger("Завершение процесса 2");
+
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +47,7 @@
 
         <div class="nav-header" style="background-color: #F0542C;">
             <div class="">
-                <a href="admin.php">
+                <a href="../admin.php">
                     <center><img src="../img/logo.png" style="background-size: cover;"></center>
                 </a>
             </div>
@@ -79,12 +90,6 @@
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Бургеры</span>
                     </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./burgers/viewburgers.php">Список бургеров</a></li>
-                        <li><a href="./burgers/addburgers.php">Добавить</a></li>
-                        <li><a href="./burgers/updateburgers.php">Обновить</a></li>
-                        <li><a href="./burgers/deleteburgers.php">Удалить</a></li>
-                    </ul>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="true">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Категории</span>
                     </a>
@@ -125,6 +130,7 @@
         <div class="content-body">
             <div class="container-fluid">
                 <div class="container">
+                    <center><h2>Список бургеров</h2></center>
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
@@ -168,6 +174,7 @@
                             ?>
                         </tbody>
                     </table>
+                    <a href="addburgers.php" class="btn btn-success mb-2">Добавить</a>
                 </div>
             </div>
         </div>

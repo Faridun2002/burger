@@ -1,8 +1,8 @@
 <?
 session_start();
 
-if(!isset($_SESSION['login'])){
-    $_SESSION["error"]="Сначало вы должны ввести логин и пароль!";
+if (!isset($_SESSION['login'])) {
+    $_SESSION["error"] = "Сначало вы должны ввести логин и пароль!";
     header("Location: login.php");
     exit;
 }
@@ -51,13 +51,11 @@ session_destroy();
                 <div class="header-left">
                     <div class="input-group icons">
                         <div class="input-group-prepend">
-                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
+                            <?php
+                            echo "<center><h2>Добро пожаловать " . $_SESSION["lname"] .  "</h2></center>";
+                            ?>
                         </div>
-                        <input type="search" class="form-control" placeholder="Поиск" aria-label="Поиск">
                         <div class="drop-down   d-md-none">
-                            <form action="#">
-                                <input type="text" class="form-control" placeholder="Поиск">
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -76,15 +74,9 @@ session_destroy();
         <div class="nk-sidebar">
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
-                    <a class="has-arrow" href="#" aria-expanded="false">
+                    <a class="has-arrow" href="./burgers/viewburgers.php" aria-expanded="false">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Бургеры</span>
                     </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./burgers/viewburgers.php">Список бургеров</a></li>
-                        <li><a href="./addburgers.php">Добавить</a></li>
-                        <li><a href="./burgers/updateburgers.php">Обновить</a></li>
-                        <li><a href="./burgers/deleteburgers.php">Удалить</a></li>
-                    </ul>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="true">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Категории</span>
                     </a>
@@ -124,9 +116,7 @@ session_destroy();
         </div>
         <div class="content-body">
             <div class="container-fluid">
-                <?php 
-                    echo "<center><h1>Добро пожаловать " . $_SESSION["lname"] .  "</h1></center>";
-                ?>
+
             </div>
         </div>
     </div>

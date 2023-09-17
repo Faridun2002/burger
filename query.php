@@ -1,7 +1,7 @@
 <?php
 
 try {
-    include_once "../conn.php";
+    include_once "conn.php";
     $conn = getconn();
 
     $act = $_POST['act'];
@@ -93,6 +93,7 @@ try {
         $description = $_POST['description'];
         $price = $_POST['price'];
         $status = $_POST['status'];
+        
         $unique_filename = "";
 
         if (isset($_FILES['file_input_name'])) {
@@ -140,12 +141,12 @@ try {
                     echo "Произошла ошибка при загрузке файла.";
                 }
             }
-            $sql = "update burgers set name=:name, description=:description, price=:price, image_url:image_url, status=:status where id = '" . $id . "';";
+            $sql = "update burgers set name=:name, description=:description, price=:price, image_url:image_url, status=".$status." where id = '" . $id . "';";
             // Подготовка и выполнение запроса
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':image_url', $unique_filename);
         } else {
-            $sql = "update burgers set name=:name, description=:description, price=:price, status=:status where id = '" . $id . "';";
+            $sql = "update burgers set name=:name, description=:description, price=:price, status=".$status." where id = '" . $id . "';";
 
             // Подготовка и выполнение запроса
             $stmt = $conn->prepare($sql);
@@ -153,9 +154,9 @@ try {
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':price', $price);
-        $stmt->bindParam(':status', $status);
 
         $stmt->execute();
+        header("Location: /burgers/viewburgers.php");
     } else if ($act == "deleteburger") {
         //Получение данных из формы
         $id = $_GET['id'];
