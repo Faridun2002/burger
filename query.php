@@ -1,8 +1,10 @@
 <?php
+include_once "log.php";
 
 try {
     include_once "conn.php";
     $conn = getconn();
+    logger("Соединение с БД");
 
     $act = $_POST['act'];
 
@@ -12,6 +14,7 @@ try {
         $lastname = $_POST['lastname'];
         $login = $_POST['login'];
         $pass = $_POST['password'] . "hello";
+        logger("Берем значение POST");
 
         $sql = "INSERT INTO user (fName, lName, login, password, status) VALUES (:firstname, :lastname, :login, :password, '1')";
 
@@ -22,12 +25,14 @@ try {
         $stmt->bindParam(':login', $login);
         $stmt->bindParam(':password', md5($pass));
         $stmt->execute();
+        logger("Добавляем нового пользователя");
     } else if ($act == "addburger") {
         //Получение данных из формы
         $name = $_POST['name'];
         $description = $_POST['description'];
         $price = $_POST['price'];
         $unique_filename = "";
+        logger("Берем значение POST");
 
         if (isset($_POST["submit"])) {
             $target_dir = "./uploads/"; // Директория, куда будут загружаться файлы
@@ -86,6 +91,9 @@ try {
         $stmt->bindParam(':price', $price);
         $stmt->bindParam(':image_url', $unique_filename);
         $stmt->execute();
+        logger("Выполняется query запрос");
+        logger("Перенаправляем на страницу Viewburgers");
+        header("Location: /burgers/viewburgers.php");
     } else if ($act == "updateburger") {
         //Получение данных из формы
         $id = $_POST['id'];
@@ -183,12 +191,13 @@ try {
     } else if ($act == "addcategory") {
         //Получение данных из формы
         $name = $_POST['name'];
+        logger("Берем значение POST");
         $sql = "INSERT INTO category (name, status) VALUES (:name,  '1')";
-
         // Подготовка и выполнение запроса
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':name', $name);
         $stmt->execute();
+        logger("Выполняется query зарпос");
     } else {
         throw new ErrorException("Ошибка неизвестный action!!!");
         return;

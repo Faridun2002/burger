@@ -2,7 +2,7 @@
 function logger($message) {
     $currentDate = date('Y-m-d');
     
-    $logDirectory = __DIR__ . "/logs"; 
+    $logDirectory = __DIR__ . "/Log"; 
     $logFilePath = "$logDirectory/$currentDate.log";
 
     $timestamp = date('Y-m-d H:i:s');

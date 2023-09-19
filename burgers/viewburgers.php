@@ -10,14 +10,6 @@
 // session_destroy();
 
 include_once "../log.php";
-// Пример использования
-logger("Начало процесса 1");
-// Выполнение процесса 1
-logger("Завершение процесса 1");
-
-logger("Начало процесса 2");
-// Выполнение процесса 2
-logger("Завершение процесса 2");
 
 ?>
 
@@ -149,16 +141,23 @@ logger("Завершение процесса 2");
 
                                 $conn = getconn();
                                 $query = "SELECT * FROM `burgers`";
-                
+                                
                                 // Подготовка запроса
                                 $stmt = $conn->prepare($query);
-                
+                                
                                 // Выполнение запроса
                                 $stmt->execute();
+                                logger("Выполнение запроса: $query");
                 
                                 // Получение результатов запроса
                                 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                
+                                
+                                $string = '';
+                                foreach ($results as $row) {
+                                    $string .= implode(", ", $row) . "\n"; // Разделитель между подмассивами и новая строка
+                                }
+
+                                logger("Результат: $string");
                                 // Вывод результатов или их обработка
                                 foreach ($results as $row) {
                                     echo    "<tr>
