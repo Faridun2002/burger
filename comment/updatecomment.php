@@ -9,8 +9,21 @@
 
 // session_destroy();
 
-include_once "../log.php";
+include_once "../conn.php";
+$conn = getconn();
 
+$id = $_GET['id'];
+// Пример SELECT-запроса
+$query = "SELECT * FROM `post` where id = '" . $id . "'";
+
+// Подготовка запроса
+$stmt = $conn->prepare($query);
+
+// Выполнение запроса
+$stmt->execute();
+
+// Получение результатов запроса
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +52,7 @@ include_once "../log.php";
 
         <div class="nav-header" style="background-color: #F0542C;">
             <div class="">
-                <a href="../admin.php">
+                <a href="admin.php">
                     <center><img src="../img/logo.png" style="background-size: cover;"></center>
                 </a>
             </div>
@@ -79,7 +92,7 @@ include_once "../log.php";
         <div class="nk-sidebar">
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
-                    <a class="has-arrow" href="#" aria-expanded="false">
+                    <a class="has-arrow" href="viewburgers.php" aria-expanded="false">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Бургеры</span>
                     </a>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="true">
@@ -103,7 +116,6 @@ include_once "../log.php";
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Посты</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="../post/viewpost.php">Список категорий</a></li>
                         <li><a href="./email-inbox.html">Добавить</a></li>
                         <li><a href="./email-read.html">Обновить</a></li>
                         <li><a href="./email-compose.html">Удалить</a></li>
@@ -123,27 +135,25 @@ include_once "../log.php";
         <div class="content-body">
             <div class="container-fluid">
                 <div class="container">
-                    <center>
-                        <h2>Список бургеров</h2>
-                    </center>
-                    <table class="table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Edit</th>
-                                <th scope="col">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <form action="../query.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="act" value="updatepost">
+                        <input type="hidden" name="id" value="<? echo $results[0]['id'] ?>">
+                        <div class="form-group">
+                            <label for="">Введите заголовок</label>
+                            <input type="text" class="form-control" name="title" placeholder="Введите заголовок" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Введите текст</label>
+                            <input type="text" class="form-control" name="text" placeholder="Введите текст" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Введите категорию</label>
                             <?php
                             include_once "../conn.php";
+                            include_once "../log.php";
 
                             $conn = getconn();
-                            $query = "SELECT * FROM `burgers`";
+                            $query = "SELECT * FROM category where status = 1";
 
                             // Подготовка запроса
                             $stmt = $conn->prepare($query);
@@ -153,31 +163,37 @@ include_once "../log.php";
                             logger("Выполнение запроса: $query");
 
                             // Получение результатов запроса
-                            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            $resulte = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                             $string = '';
-                            foreach ($results as $row) {
+                            foreach ($resulte as $row) {
                                 $string .= implode(", ", $row) . "\n"; // Разделитель между подмассивами и новая строка
                             }
 
                             logger("Результат: $string");
                             // Вывод результатов или их обработка
-                            foreach ($results as $row) {
-                                echo    "<tr>
-                                    <th scope='col'>" . $row['id'] . "</th>
-                                    <th scope='col'>" . $row['name'] . "</th>
-                                    <th scope='col'>" . $row['description'] . "</th>
-                                    <th scope='col'>" . $row['price'] . "</th>
-                                    <th scope='col'>" . $row['status'] . "</th>
-                                    <th scope='col'><a href='updateburgers.php?id=" . $row['id'] . "' class='btn btn-primary'>Edit</a></th>
-                                    <th scope='col'><a href='deleteburgers.php?id=" . $row['id'] . "' class='btn btn-primary'>Delete</a></th>
-                                    </tr>";
+                            echo '<select name="categoryId">';
+                            foreach ($resulte as $row) {
+                                echo    "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
                             }
+
+                            echo '</select>';
                             ?>
-                        </tbody>
-                    </table>
-                    <a href="addburgers.php" class="btn btn-success mb-2">Добавить</a>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Выберите файл для загрузки:</label>
+                            <input type="file" class="btn" value="Выбрать" name="fileToUpload" id="fileToUpload" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Введите статус</label>
+                            <input type="text" class="form-control" name="status" placeholder="Введите статус" value="<? echo $results[0]['status'] ?>" required>
+                        </div>
+                        <input type="submit" value="Submit" name="submit" class="btn btn-primary">
+                    </form>
                 </div>
+                <?php
+                // echo "<center><h1>Добро пожаловать " . $_SESSION["lname"] .  "</h1></center>";
+                ?>
             </div>
         </div>
     </div>

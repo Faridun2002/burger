@@ -1,0 +1,18 @@
+<burgers>
+    <burger>
+        <name>Beefy Burgers</name>
+        <description>
+        Сочные говяжьи бургеры с великолепным вкусом и текстурой.
+        </description>
+        <price>5.00</price>
+        <imageURL>65009c52aaa2b.png</imageURL>
+    </burger>
+    <burger>
+        <name>Beefy Burgers</name>
+        <description>
+        Сочные говяжьи бургеры с великолепным вкусом и текстурой.
+        </description>
+        <price>6.00</price>
+        <imageURL>65009ded6d93e.png</imageURL>
+    </burger>
+</burgers>

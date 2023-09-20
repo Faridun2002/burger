@@ -101,7 +101,7 @@ try {
         $description = $_POST['description'];
         $price = $_POST['price'];
         $status = $_POST['status'];
-        
+
         $unique_filename = "";
 
         if (isset($_FILES['file_input_name'])) {
@@ -149,12 +149,12 @@ try {
                     echo "Произошла ошибка при загрузке файла.";
                 }
             }
-            $sql = "update burgers set name=:name, description=:description, price=:price, image_url:image_url, status=".$status." where id = '" . $id . "';";
+            $sql = "update burgers set name=:name, description=:description, price=:price, image_url:image_url, status=" . $status . " where id = '" . $id . "';";
             // Подготовка и выполнение запроса
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':image_url', $unique_filename);
         } else {
-            $sql = "update burgers set name=:name, description=:description, price=:price, status=".$status." where id = '" . $id . "';";
+            $sql = "update burgers set name=:name, description=:description, price=:price, status=" . $status . " where id = '" . $id . "';";
 
             // Подготовка и выполнение запроса
             $stmt = $conn->prepare($sql);
@@ -198,7 +198,151 @@ try {
         $stmt->bindParam(':name', $name);
         $stmt->execute();
         logger("Выполняется query зарпос");
-    } else {
+    } else if ($act == "addpost") {
+        //Получение данных из формы
+        $title = $_POST['title'];
+        $text = $_POST['text'];
+        $categoryId = $_POST['categoryId'];
+        $userId = 1;
+        $status = $_POST['status'];
+        $unique_filename = "";
+        logger("Берем значение POST");
+
+        if (isset($_POST["submit"])) {
+            $target_dir = "./uploads/"; // Директория, куда будут загружаться файлы
+            $imageFileType = strtolower(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION));
+
+            // Генерируем уникальное имя для файла
+            $unique_filename = uniqid() . "." . $imageFileType;
+
+            $target_file = $target_dir . $unique_filename;
+            $uploadOk = 1;
+
+            // Проверка, является ли файл изображением
+            if (isset($_FILES["fileToUpload"])) {
+                $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+                if ($check !== false) {
+                    echo "Файл является изображением - " . $check["mime"] . ".";
+                    $uploadOk = 1;
+                } else {
+                    echo "Файл не является изображением.";
+                    $uploadOk = 0;
+                }
+            }
+
+            // Проверка наличия файла
+            if ($_FILES["fileToUpload"]["size"] == 0) {
+                echo "Файл не был загружен.";
+                $uploadOk = 0;
+            }
+
+            // Разрешенные форматы файлов
+            $allowed_formats = ["jpg", "jpeg", "png"];
+            if (!in_array($imageFileType, $allowed_formats)) {
+                echo "Разрешены только JPG, JPEG и PNG файлы.";
+                $uploadOk = 0;
+            }
+
+            // Проверка на ошибки при загрузке
+            if ($uploadOk == 0) {
+                echo "Файл не был загружен.";
+            } else {
+                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    // echo "Файл " . basename($_FILES["fileToUpload"]["name"]) . " успешно загружен.";
+                } else {
+                    echo "Произошла ошибка при загрузке файла.";
+                }
+            }
+        }
+
+
+        $sql = "INSERT INTO post (title, text, image_url, categoryId, userId,status) VALUES (:title, :text, :image_url, :categoryId, :userId,'1')";
+
+        // Подготовка и выполнение запроса
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':text', $text);
+        $stmt->bindParam(':image_url', $unique_filename);
+        $stmt->bindParam(':categoryId', $categoryId);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+        logger("Выполняется query запрос");
+        logger("Перенаправляем на страницу Viewburgers");
+        header("Location: /post/viewpost.php");
+    } else if ($act == "updatepost") {
+        //Получение данных из формы
+        $id = $_POST['id'];
+        $title = $_POST['title'];
+        $text = $_POST['text'];
+        $categoryId = $_POST['categoryId'];
+        $userId = 1;
+
+        $unique_filename = "";
+
+        if (isset($_FILES['file_input_name'])) {
+            $target_dir = "./uploads/"; // Директория, куда будут загружаться файлы
+            $imageFileType = strtolower(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION));
+
+            // Генерируем уникальное имя для файла
+            $unique_filename = uniqid() . "." . $imageFileType;
+
+            $target_file = $target_dir . $unique_filename;
+            $uploadOk = 1;
+
+            // Проверка, является ли файл изображением
+            if (isset($_FILES["fileToUpload"])) {
+                $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+                if ($check !== false) {
+                    echo "Файл является изображением - " . $check["mime"] . ".";
+                    $uploadOk = 1;
+                } else {
+                    echo "Файл не является изображением.";
+                    $uploadOk = 0;
+                }
+            }
+
+            // Проверка наличия файла
+            if ($_FILES["fileToUpload"]["size"] == 0) {
+                echo "Файл не был загружен.";
+                $uploadOk = 0;
+            }
+
+            // Разрешенные форматы файлов
+            $allowed_formats = ["jpg", "jpeg", "png"];
+            if (!in_array($imageFileType, $allowed_formats)) {
+                echo "Разрешены только JPG, JPEG и PNG файлы.";
+                $uploadOk = 0;
+            }
+
+            // Проверка на ошибки при загрузке
+            if ($uploadOk == 0) {
+                echo "Файл не был загружен.";
+            } else {
+                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    // echo "Файл " . basename($_FILES["fileToUpload"]["name"]) . " успешно загружен.";
+                } else {
+                    echo "Произошла ошибка при загрузке файла.";
+                }
+            }
+            $sql = "update post set title=:title, text=:text, image_url=:image_url, categoryId=:categoryId, userId=:userId, status=:status where id = '" . $id . "';";
+            // Подготовка и выполнение запроса
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':image_url', $unique_filename);
+        } else {
+            $sql = "update post set title=:title, text=:text, categoryId=:categoryId, userId=:userId, status=:status where id = '" . $id . "';";
+
+            // Подготовка и выполнение запроса
+            $stmt = $conn->prepare($sql);
+        }
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':text', $text);
+        $stmt->bindParam(':categoryId', $categoryId);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->bindParam(':status', $status);
+
+        $stmt->execute();
+        header("Location: /post/viewpost.php");
+    }  else {
         throw new ErrorException("Ошибка неизвестный action!!!");
         return;
     }

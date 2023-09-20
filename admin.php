@@ -98,6 +98,7 @@ session_destroy();
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Посты</span>
                     </a>
                     <ul aria-expanded="false">
+                        <li><a href="../post/viewpost.php">Список категорий</a></li>
                         <li><a href="./email-inbox.html">Добавить</a></li>
                         <li><a href="./email-read.html">Обновить</a></li>
                         <li><a href="./email-compose.html">Удалить</a></li>

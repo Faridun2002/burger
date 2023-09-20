@@ -1,0 +1,12 @@
+<posts>
+    <post>
+        <title>s1</title>
+        <text>s2</text>
+        <imageURL>650a839d829ae.png</imageURL>
+        <categoryId>1</categoryId>
+        <userId>1</userId>
+        <createDate>2023-09-20 08:31:09</createDate>
+        <updateDate/>
+        <status>1</status>
+    </post>
+</posts>

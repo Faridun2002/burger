@@ -103,7 +103,6 @@ include_once "../log.php";
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Посты</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="../post/viewpost.php">Список категорий</a></li>
                         <li><a href="./email-inbox.html">Добавить</a></li>
                         <li><a href="./email-read.html">Обновить</a></li>
                         <li><a href="./email-compose.html">Удалить</a></li>
@@ -124,16 +123,17 @@ include_once "../log.php";
             <div class="container-fluid">
                 <div class="container">
                     <center>
-                        <h2>Список бургеров</h2>
+                        <h2>Список постов</h2>
                     </center>
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Id</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Text</th>
+                                <th scope="col">ImageURL</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">User</th>
                                 <th scope="col">Edit</th>
                                 <th scope="col">Delete</th>
                             </tr>
@@ -143,7 +143,7 @@ include_once "../log.php";
                             include_once "../conn.php";
 
                             $conn = getconn();
-                            $query = "SELECT * FROM `burgers`";
+                            $query = "SELECT post.`id`, post.`title`, post.`text`,post.`image_url`,CONCAT(u.`fName`,' ',u.`lName`) AS username, c.`name` AS category FROM `post` AS post JOIN category AS c ON c.`id` = post.`categoryId` JOIN `user` AS u ON post.`userId` = u.`id`";
 
                             // Подготовка запроса
                             $stmt = $conn->prepare($query);
@@ -165,18 +165,19 @@ include_once "../log.php";
                             foreach ($results as $row) {
                                 echo    "<tr>
                                     <th scope='col'>" . $row['id'] . "</th>
-                                    <th scope='col'>" . $row['name'] . "</th>
-                                    <th scope='col'>" . $row['description'] . "</th>
-                                    <th scope='col'>" . $row['price'] . "</th>
-                                    <th scope='col'>" . $row['status'] . "</th>
-                                    <th scope='col'><a href='updateburgers.php?id=" . $row['id'] . "' class='btn btn-primary'>Edit</a></th>
-                                    <th scope='col'><a href='deleteburgers.php?id=" . $row['id'] . "' class='btn btn-primary'>Delete</a></th>
+                                    <th scope='col'>" . $row['title'] . "</th>
+                                    <th scope='col'>" . $row['text'] . "</th>
+                                    <th scope='col'>" . $row['image_url'] . "</th>
+                                    <th scope='col'>" . $row['category'] . "</th>
+                                    <th scope='col'>" . $row['username'] . "</th>
+                                    <th scope='col'><a href='updatepost.php?id=" . $row['id'] . "' class='btn btn-primary'>Edit</a></th>
+                                    <th scope='col'><a href='deletepost.php?id=" . $row['id'] . "' class='btn btn-primary'>Delete</a></th>
                                     </tr>";
                             }
                             ?>
                         </tbody>
                     </table>
-                    <a href="addburgers.php" class="btn btn-success mb-2">Добавить</a>
+                    <a href="addpost.php" class="btn btn-success mb-2">Добавить</a>
                 </div>
             </div>
         </div>
