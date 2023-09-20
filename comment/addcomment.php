@@ -76,43 +76,18 @@
         <div class="nk-sidebar">
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
-                    <a class="has-arrow" href="viewburgers.php" aria-expanded="false">
+                    <a class="has-arrow" href="../burgers/viewburgers.php" aria-expanded="false">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Бургеры</span>
                     </a>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="true">
+                    <a class="has-arrow" href="../category/viewcategory.php" aria-expanded="false">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Категории</span>
                     </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./category/category.php">Список категорий</a></li>
-                        <li><a href="./category/addcategory.php">Добавить</a></li>
-                        <li><a href="./email-read.html">Обновить</a></li>
-                        <li><a href="./email-compose.html">Удалить</a></li>
-                    </ul>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="icon-envelope menu-icon"></i> <span class="nav-text">Листы</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./email-inbox.html">Добавить</a></li>
-                        <li><a href="./email-read.html">Обновить</a></li>
-                        <li><a href="./email-compose.html">Удалить</a></li>
-                    </ul>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <a class="has-arrow" href="../post/viewpost.php" aria-expanded="false">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Посты</span>
                     </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./email-inbox.html">Добавить</a></li>
-                        <li><a href="./email-read.html">Обновить</a></li>
-                        <li><a href="./email-compose.html">Удалить</a></li>
-                    </ul>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="icon-envelope menu-icon"></i> <span class="nav-text">Пользователи</span>
+                    <a class="has-arrow" href="../comment/viewcomment.php" aria-expanded="false">
+                        <i class="icon-envelope menu-icon"></i> <span class="nav-text">Комментарии</span>
                     </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./email-inbox.html">Добавить</a></li>
-                        <li><a href="./email-read.html">Обновить</a></li>
-                        <li><a href="./email-compose.html">Удалить</a></li>
-                        <li><a href="./email-compose.html">Список пользователей</a></li>
-                    </ul>
                 </ul>
             </div>
         </div>
@@ -120,23 +95,19 @@
             <div class="container-fluid">
                 <div class="container">
                     <form action="../query.php" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="act" value="addpost">
-                        <div class="form-group">
-                            <label for="">Введите заголовок</label>
-                            <input type="text" class="form-control" name="title" placeholder="Введите заголовок" required>
-                        </div>
+                        <input type="hidden" name="act" value="addcomment">
                         <div class="form-group">
                             <label for="">Введите текст</label>
                             <input type="text" class="form-control" name="text" placeholder="Введите текст" required>
                         </div>
                         <div class="form-group">
-                            <label for="">Введите категорию</label>
+                            <label for="">Введите пост</label>
                             <?php
                             include_once "../conn.php";
                             include_once "../log.php";
 
                             $conn = getconn();
-                            $query = "SELECT * FROM category where status = 1";
+                            $query = "SELECT * FROM post where status = 1";
 
                             // Подготовка запроса
                             $stmt = $conn->prepare($query);
@@ -155,17 +126,13 @@
 
                             logger("Результат: $string");
                             // Вывод результатов или их обработка
-                            echo '<select name="categoryId">';
+                            echo '<select name="id">';
                             foreach ($results as $row) {
-                                echo    "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
+                                echo    "<option value=" . $row['id'] . ">" . $row['text'] . "</option>";
                             }
 
                             echo '</select>';
                             ?>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Выберите файл для загрузки:</label>
-                            <input type="file" class="btn" value="Выбрать" name="fileToUpload" id="fileToUpload" required>
                         </div>
                         <input type="submit" value="Submit" name="submit" class="btn btn-primary">
                     </form>

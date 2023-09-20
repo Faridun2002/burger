@@ -120,8 +120,8 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <li><a href="./email-read.html">Обновить</a></li>
                         <li><a href="./email-compose.html">Удалить</a></li>
                     </ul>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="icon-envelope menu-icon"></i> <span class="nav-text">Пользователи</span>
+                    <a class="has-arrow" href="./comment/viewcomment.php" aria-expanded="false">
+                        <i class="icon-envelope menu-icon"></i> <span class="nav-text">Комментарии</span>
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="./email-inbox.html">Добавить</a></li>
