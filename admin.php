@@ -77,41 +77,15 @@ session_destroy();
                     <a class="has-arrow" href="./burgers/viewburgers.php" aria-expanded="false">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Бургеры</span>
                     </a>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="true">
+                    <a class="has-arrow" href="./category/viewcategory.php" aria-expanded="true">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Категории</span>
                     </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./category/viewcategory.php">Список категорий</a></li>
-                        <li><a href="./category/addcategory.php">Добавить</a></li>
-                        <li><a href="./email-read.html">Обновить</a></li>
-                        <li><a href="./email-compose.html">Удалить</a></li>
-                    </ul>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="icon-envelope menu-icon"></i> <span class="nav-text">Листы</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./email-inbox.html">Добавить</a></li>
-                        <li><a href="./email-read.html">Обновить</a></li>
-                        <li><a href="./email-compose.html">Удалить</a></li>
-                    </ul>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <a class="has-arrow" href="./post/viewpost.php" aria-expanded="false">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Посты</span>
                     </a>
-                    <ul aria-expanded="false">
-                        <li><a href="../post/viewpost.php">Список категорий</a></li>
-                        <li><a href="./email-inbox.html">Добавить</a></li>
-                        <li><a href="./email-read.html">Обновить</a></li>
-                        <li><a href="./email-compose.html">Удалить</a></li>
-                    </ul>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="icon-envelope menu-icon"></i> <span class="nav-text">Пользователи</span>
+                    <a class="has-arrow" href="./comment/viewcomment.php" aria-expanded="false">
+                        <i class="icon-envelope menu-icon"></i> <span class="nav-text">Комментарии</span>
                     </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./email-inbox.html">Добавить</a></li>
-                        <li><a href="./email-read.html">Обновить</a></li>
-                        <li><a href="./email-compose.html">Удалить</a></li>
-                        <li><a href="./email-compose.html">Список пользователей</a></li>
-                    </ul>
                 </ul>
             </div>
         </div>

@@ -36,6 +36,6 @@ try {
     $_SESSION["error"] = "Логин или пароль введён неверно!";
     header("Location: login.php");
     exit;
-} catch (PDOException $e) {
+} catch (Throwable $e) {
     die("Ошибка подключения к базе данных: " . $e->getMessage());
 }

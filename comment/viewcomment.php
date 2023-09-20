@@ -79,43 +79,18 @@ include_once "../log.php";
         <div class="nk-sidebar">
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
-                    <a class="has-arrow" href="#" aria-expanded="false">
+                    <a class="has-arrow" href="../burgers/viewburgers.php" aria-expanded="false">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Бургеры</span>
                     </a>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="true">
+                    <a class="has-arrow" href="../category/viewcategory.php" aria-expanded="false">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Категории</span>
                     </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./category/category.php">Список категорий</a></li>
-                        <li><a href="./category/addcategory.php">Добавить</a></li>
-                        <li><a href="./email-read.html">Обновить</a></li>
-                        <li><a href="./email-compose.html">Удалить</a></li>
-                    </ul>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="icon-envelope menu-icon"></i> <span class="nav-text">Листы</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./email-inbox.html">Добавить</a></li>
-                        <li><a href="./email-read.html">Обновить</a></li>
-                        <li><a href="./email-compose.html">Удалить</a></li>
-                    </ul>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <a class="has-arrow" href="../post/viewpost.php" aria-expanded="false">
                         <i class="icon-envelope menu-icon"></i> <span class="nav-text">Посты</span>
                     </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./email-inbox.html">Добавить</a></li>
-                        <li><a href="./email-read.html">Обновить</a></li>
-                        <li><a href="./email-compose.html">Удалить</a></li>
-                    </ul>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="icon-envelope menu-icon"></i> <span class="nav-text">Пользователи</span>
+                    <a class="has-arrow" href="../comment/viewcomment.php" aria-expanded="false">
+                        <i class="icon-envelope menu-icon"></i> <span class="nav-text">Комментарии</span>
                     </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./email-inbox.html">Добавить</a></li>
-                        <li><a href="./email-read.html">Обновить</a></li>
-                        <li><a href="./email-compose.html">Удалить</a></li>
-                        <li><a href="./email-compose.html">Список пользователей</a></li>
-                    </ul>
                 </ul>
             </div>
         </div>
@@ -123,17 +98,15 @@ include_once "../log.php";
             <div class="container-fluid">
                 <div class="container">
                     <center>
-                        <h2>Список постов</h2>
+                        <h2>Список комментариев</h2>
                     </center>
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Id</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Text</th>
-                                <th scope="col">ImageURL</th>
-                                <th scope="col">Category</th>
                                 <th scope="col">User</th>
+                                <th scope="col">Post</th>
+                                <th scope="col">Text</th>
                                 <th scope="col">Edit</th>
                                 <th scope="col">Delete</th>
                             </tr>
@@ -143,7 +116,9 @@ include_once "../log.php";
                             include_once "../conn.php";
 
                             $conn = getconn();
-                            $query = "SELECT post.`id`, post.`title`, post.`text`,post.`image_url`,CONCAT(u.`fName`,' ',u.`lName`) AS username, c.`name` AS category FROM `post` AS post JOIN category AS c ON c.`id` = post.`categoryId` JOIN `user` AS u ON post.`userId` = u.`id`";
+                            $query = "SELECT c.`id`, CONCAT(u.`fName`,' ',u.`lName`) AS username, p.`text` as post, c.`text` FROM `comment` AS c
+                            JOIN post AS p ON c.`postId` = p.`id`
+                            JOIN `user` AS u ON c.`userId` = u.`id`";
 
                             // Подготовка запроса
                             $stmt = $conn->prepare($query);
@@ -165,11 +140,10 @@ include_once "../log.php";
                             foreach ($results as $row) {
                                 echo    "<tr>
                                     <th scope='col'>" . $row['id'] . "</th>
-                                    <th scope='col'>" . $row['title'] . "</th>
-                                    <th scope='col'>" . $row['text'] . "</th>
-                                    <th scope='col'>" . $row['image_url'] . "</th>
-                                    <th scope='col'>" . $row['category'] . "</th>
                                     <th scope='col'>" . $row['username'] . "</th>
+                                    <th scope='col'>" . $row['post'] . "</th>
+                                    <th scope='col'>" . $row['text'] . "</th>
+                                    <th scope='col'>" . $row['comment'] . "</th>
                                     <th scope='col'><a href='updatepost.php?id=" . $row['id'] . "' class='btn btn-primary'>Edit</a></th>
                                     <th scope='col'><a href='deletepost.php?id=" . $row['id'] . "' class='btn btn-primary'>Delete</a></th>
                                     </tr>";
