@@ -138,7 +138,7 @@ include_once "../log.php";
                                 <th scope="col">Delete</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id='res'>
                             <?php
                             include_once "../conn.php";
 
@@ -170,9 +170,10 @@ include_once "../log.php";
                                     <th scope='col'>" . $row['price'] . "</th>
                                     <th scope='col'>" . $row['status'] . "</th>
                                     <th scope='col'><a href='updateburgers.php?id=" . $row['id'] . "' class='btn btn-primary'>Edit</a></th>
-                                    <th scope='col'><a href='deleteburgers.php?id=" . $row['id'] . "' class='btn btn-primary'>Delete</a></th>
+                                    <th scope='col'><button class='delete-record btn btn-primary' data-record-id='" . $row['id'] . "'>Delete</button></th>
                                     </tr>";
                             }
+                            // <th scope='col'><a href='deleteburgers.php?id=" . $row['id'] . "' class='btn btn-primary'>Delete</a></th>
                             ?>
                         </tbody>
                     </table>
@@ -186,6 +187,48 @@ include_once "../log.php";
     <script src="../js/settings.js"></script>
     <script src="../js/gleek.js"></script>
     <script src="../js/styleSwitcher.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Обработчик события клика на кнопке "Удалить запись"
+            $(".delete-record").click(function() {
+                alert("ok");
+                var record_id = $(this).data("record-id");
+
+                // Отправляем AJAX-запрос для удаления записи
+                $.ajax({
+                    url: "deleteburgers.php",
+                    type: "GET",
+                    data: {
+                        record_id: record_id
+                    },
+                    success: function(response) {
+                        // После успешного удаления записи, обновляем список записей
+                        updateRecordList();
+                    },
+                    error: function() {
+                        alert("Произошла ошибка при удалении записи.");
+                    }
+                });
+            });
+
+            // Функция для обновления списка записей
+            function updateRecordList() {
+                $.ajax({
+                    url: "fetch_records.php",
+                    type: "GET",
+                    success: function(response) {
+                        // Вставляем полученные данные в div с id "record-list"
+                        $("#res").html(response);
+                    },
+                    error: function() {
+                        alert("Произошла ошибка при обновлении списка записей.");
+                    }
+                });
+            }
+        });
+    </script>
 
 </body>
 

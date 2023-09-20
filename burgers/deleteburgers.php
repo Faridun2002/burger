@@ -5,7 +5,7 @@ try {
 
     $conn = getconn();
     //Получение данных из формы
-    $id = $_GET['id'];
+    $id = $_GET['record_id'];
 
     $sql = "delete from burgers where id = '" . $id . "';";
     // Подготовка и выполнение запроса
