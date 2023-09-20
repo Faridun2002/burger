@@ -1,14 +1,14 @@
 <!doctype html>
 <html class="no-js" lang="zxx">
 
-<?php include_once "head.php"?>
+<?php include_once "head.php" ?>
 
 <body>
     <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
 
-    <?php include_once "header.php"?>
+    <?php include_once "header.php" ?>
 
     <!-- bradcam_area_start -->
     <div class="bradcam_area breadcam_bg">
@@ -22,115 +22,48 @@
             <div class="row">
                 <div class="col-lg-8 mb-5 mb-lg-0">
                     <div class="blog_left_sidebar">
-                        <article class="blog_item">
-                            <div class="blog_item_img">
-                                <img class="card-img rounded-0" src="img/blog/single_blog_1.png" alt="">
-                                <a href="#" class="blog_item_date">
-                                    <h3>15</h3>
-                                    <p>Ян</p>
-                                </a>
-                            </div>
+                        <?php
+                        include_once "conn.php";
+                        $conn = getconn();
 
-                            <div class="blog_details">
-                                <a class="d-inline-block" href="single-blog.html">
-                                    <h2>Google подписывает договор о строительстве нового 35-этажного офиса</h2>
-                                </a>
-                                <p>То, что звезды владычества освещают годы разделения владычества на четвертые, не имеют звезд, это то, что
-                                    он сначала заземляет его, а не небеса, засевая его на второе утро, говоря:</p>
-                                <ul class="blog-info-link">
-                                    <li><a href="#"><i class="fa fa-user"></i> Путешествия, Образ жизни</a></li>
-                                    <li><a href="#"><i class="fa fa-comments"></i> 03 комментариев</a></li>
-                                </ul>
-                            </div>
-                        </article>
+                        $query = "SELECT p.`title`, p.`text`,p.`image_url`,p.`createDate`,COUNT(c.`text`) AS `comment`, category.`name` AS category FROM `post` AS p
+                        LEFT JOIN `comment` AS c ON p.`id` = c.`postId`
+                        JOIN category AS category ON p.`categoryId` = category.`id` where p.status = '1'
+                        GROUP BY p.`id`";
 
-                        <article class="blog_item">
-                            <div class="blog_item_img">
-                                <img class="card-img rounded-0" src="img/blog/single_blog_2.png" alt="">
-                                <a href="#" class="blog_item_date">
-                                    <h3>15</h3>
-                                    <p>Ян</p>
-                                </a>
-                            </div>
+                        // Подготовка запроса
+                        $stmt = $conn->prepare($query);
 
-                            <div class="blog_details">
-                                <a class="d-inline-block" href="single-blog.html">
-                                    <h2>Google подписывает договор о строительстве нового 35-этажного офиса</h2>
-                                </a>
-                                <p>То, что звезды владычества освещают годы разделения владычества на четвертые, не имеют звезд, это то, что
-                                    он сначала заземляет его, а не небеса, засевая его на второе утро, говоря:</p>
-                                <ul class="blog-info-link">
-                                    <li><a href="#"><i class="fa fa-user"></i> Путешествия, Образ жизни</a></li>
-                                    <li><a href="#"><i class="fa fa-comments"></i> 03 комментариев</a></li>
-                                </ul>
-                            </div>
-                        </article>
+                        // Выполнение запроса
+                        $stmt->execute();
 
-                        <article class="blog_item">
-                            <div class="blog_item_img">
-                                <img class="card-img rounded-0" src="img/blog/single_blog_3.png" alt="">
-                                <a href="#" class="blog_item_date">
-                                    <h3>15</h3>
-                                    <p>Ян</p>
-                                </a>
-                            </div>
+                        // Получение результатов запроса
+                        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                            <div class="blog_details">
-                                <a class="d-inline-block" href="single-blog.html">
-                                    <h2>Google подписывает договор о строительстве нового 35-этажного офиса</h2>
-                                </a>
-                                <p>То, что звезды владычества освещают годы разделения владычества на четвертые, не имеют звезд, это то, что
-                                    он сначала заземляет его, а не небеса, засевая его на второе утро, говоря:</p>
-                                <ul class="blog-info-link">
-                                    <li><a href="#"><i class="fa fa-user"></i> Путешествия, Образ жизни</a></li>
-                                    <li><a href="#"><i class="fa fa-comments"></i> 03 комментариев</a></li>
-                                </ul>
-                            </div>
-                        </article>
+                        // Вывод результатов или их обработка
+                        foreach ($results as $row) {
+                            echo    " <article class='blog_item'>
+                    <div class='blog_item_img'>
+                        <img class='card-img rounded-0' src='uploads/" . $row['image_url'] . "' alt=''>
+                        <a href='#' class='blog_item_date'>
+                            <h3>" . $row['createDate'] . "</h3>
+                            <p>Ян</p>
+                        </a>
+                    </div>
 
-                        <article class="blog_item">
-                            <div class="blog_item_img">
-                                <img class="card-img rounded-0" src="img/blog/single_blog_4.png" alt="">
-                                <a href="#" class="blog_item_date">
-                                    <h3>15</h3>
-                                    <p>Ян</p>
-                                </a>
-                            </div>
-
-                            <div class="blog_details">
-                                <a class="d-inline-block" href="single-blog.html">
-                                    <h2>Google подписывает договор о строительстве нового 35-этажного офиса</h2>
-                                </a>
-                                <p>То, что звезды владычества освещают годы разделения владычества на четвертые, не имеют звезд, это то, что
-                                    он сначала заземляет его, а не небеса, засевая его на второе утро, говоря:</p>
-                                <ul class="blog-info-link">
-                                    <li><a href="#"><i class="fa fa-user"></i> Путешествия, Образ жизни</a></li>
-                                    <li><a href="#"><i class="fa fa-comments"></i> 03 комментариев</a></li>
-                                </ul>
-                            </div>
-                        </article>
-
-                        <article class="blog_item">
-                            <div class="blog_item_img">
-                                <img class="card-img rounded-0" src="img/blog/single_blog_5.png" alt="">
-                                <a href="#" class="blog_item_date">
-                                    <h3>15</h3>
-                                    <p>Ян</p>
-                                </a>
-                            </div>
-
-                            <div class="blog_details">
-                                <a class="d-inline-block" href="single-blog.html">
-                                    <h2>Google подписывает договор о строительстве нового 35-этажного офиса</h2>
-                                </a>
-                                <p>То, что звезды владычества освещают годы разделения владычества на четвертые, не имеют звезд, это то, что
-                                    он сначала заземляет его, а не небеса, засевая его на второе утро, говоря:</p>
-                                <ul class="blog-info-link">
-                                    <li><a href="#"><i class="fa fa-user"></i> Путешествия, Образ жизни</a></li>
-                                    <li><a href="#"><i class="fa fa-comments"></i> 03 комментариев</a></li>
-                                </ul>
-                            </div>
-                        </article>
+                    <div class='blog_details'>
+                        <a class='d-inline-block' href='single-blog.html'>
+                            <h2>'" . $row['title'] . "'</h2>
+                        </a>
+                        <p>'" . $row['text'] . "':</p>
+                        <ul class='blog-info-link'>
+                            <li><a href='#'><i class='fa fa-user'></i> " . $row['category'] . "</a></li>
+                            <li><a href='#'><i class='fa fa-comments'></i> " . $row['comment'] . " комментариев</a></li>
+                        </ul>
+                    </div>
+                </article>";
+                        }
+                        ?>
 
                         <nav class="blog-pagination justify-content-center d-flex">
                             <ul class="pagination">
@@ -160,16 +93,13 @@
                             <form action="#">
                                 <div class="form-group">
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder='Поиск по ключевому слову'
-                                            onfocus="this.placeholder = ''"
-                                            onblur="this.placeholder = 'Поиск по ключевому слову'">
+                                        <input type="text" class="form-control" placeholder='Поиск по ключевому слову' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Поиск по ключевому слову'">
                                         <div class="input-group-append">
                                             <button class="btn" type="button"><i class="ti-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
-                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                    type="submit">Поиск</button>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Поиск</button>
                             </form>
                         </aside>
 
@@ -327,11 +257,9 @@
 
                             <form action="#">
                                 <div class="form-group">
-                                    <input type="email" class="form-control" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Введите адрес электронной почты'" placeholder='Введите адрес электронной почты' required>
+                                    <input type="email" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Введите адрес электронной почты'" placeholder='Введите адрес электронной почты' required>
                                 </div>
-                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                    type="submit">Подписаться</button>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Подписаться</button>
                             </form>
                         </aside>
                     </div>
@@ -341,6 +269,6 @@
     </section>
     <!--================Blog Area =================-->
 
-    <?php include_once "footer.php"?>
+    <?php include_once "footer.php" ?>
 
 </body>
