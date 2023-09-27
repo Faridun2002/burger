@@ -151,7 +151,7 @@ include_once "../log.php";
                             ?>
                         </tbody>
                     </table>
-                    <a href="addpost.php" class="btn btn-success mb-2">Добавить</a>
+                    <a href="addcomment.php" class="btn btn-success mb-2">Добавить</a>
                 </div>
             </div>
         </div>

@@ -188,7 +188,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="iteam_links">
-                        <a class="boxed-btn5" href="Menu.html">Больше предметов</a>
+                        <a class="boxed-btn5" href="Menu.php">Больше предметов</a>
                     </div>
                 </div>
             </div>
